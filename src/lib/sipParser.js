@@ -1,8 +1,4 @@
-// src/lib/sipParser.js
-// A helper function that would turn raw exported SIP text into the message array.
 export function parseRawSip(rawText) {
-  // In a real scenario, this would parse string headers into objects.
-  // Returning mock data for now so the component can render.
   return [
     { id: "m1", t: 0.000, from: "caller", to: "callee", label: "INVITE", kind: "request" },
     { id: "m2", t: 0.014, from: "callee", to: "caller", label: "100 Trying", kind: "provisional" },

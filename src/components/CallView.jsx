@@ -14,5 +14,4 @@ function CallView({ participants }) {
     </div>
   );
 }
-
 export default CallView;

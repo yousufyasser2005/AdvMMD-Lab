@@ -1,4 +1,3 @@
-// src/components/Ladder.jsx
 function Ladder({ messages }) {
   if (!messages || messages.length === 0) {
     return <div className="ladder-empty">No messages to display</div>;
@@ -12,13 +11,10 @@ function Ladder({ messages }) {
       </div>
       <div className="ladder-body">
         {messages.map((msg) => {
-          // If the message is FROM the caller, it goes right. If FROM callee, it goes left.
           const isRight = msg.from === 'caller';
-          
           return (
             <div key={msg.id} className={`ladder-row kind-${msg.kind}`}>
               <span className="timestamp">{msg.t.toFixed(3)}s</span>
-              
               <div className={`arrow-line ${isRight ? 'right' : 'left'}`}>
                 <span className="arrow-head">{isRight ? '➤' : '➤'}</span>
                 <span className={`arrow-label ${isRight ? 'right' : 'left'}`}>
@@ -32,5 +28,4 @@ function Ladder({ messages }) {
     </div>
   );
 }
-
 export default Ladder;
