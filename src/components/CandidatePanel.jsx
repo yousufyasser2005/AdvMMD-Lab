@@ -1,71 +1,57 @@
-import { useState, useEffect, useRef } from 'react';
+// src/components/CandidatePanel.jsx
+import { useState, useEffect } from 'react';
 import { gatherCandidates } from '../lib/gatherCandidates';
 
+// Slide 12: Keep CONFIGS outside the component so array identity is stable
 const CONFIGS = {
   none: [],
   stun: [{ urls: "stun:stun.l.google.com:19302" }],
-  wrong: [{ urls: "stun:stun.invalid.example:3478" }],
+  wrong: [{ urls: "stun:stun.invalid.example:3478" }]
 };
 
 function CandidatePanel() {
-  const [configKey, setConfigKey] = useState('stun');
+  // Slide 12: State setup
+  const [configName, setConfigName] = useState("stun");
   const [candidates, setCandidates] = useState([]);
-  const [gatheringState, setGatheringState] = useState('new');
-  const [elapsedTime, setElapsedTime] = useState(0);
-  const timerRef = useRef(null);
+  const [state, setState] = useState("new");
+  const [elapsed, setElapsed] = useState(null);
+  
+  const iceServers = CONFIGS[configName];
 
+  // Slide 12: Effect with cleanup and performance.now timer
   useEffect(() => {
     setCandidates([]);
-    setGatheringState('new');
-    setElapsedTime(0);
+    setElapsed(null);
     
-    let startTime = Date.now();
-
-    const stopGathering = gatherCandidates({
-      iceServers: CONFIGS[configKey],
-      onCandidate: (candidate) => {
-        setCandidates(prev => 
-          [...prev, candidate].sort((a, b) => b.priority - a.priority)
-        );
-      },
-      onDone: () => {
-        setGatheringState('complete');
-        if (timerRef.current) {
-          clearInterval(timerRef.current);
-          setElapsedTime(Date.now() - startTime);
-        }
-      },
-      onStateChange: (state) => {
-        setGatheringState(state);
-        if (state === 'gathering' && !timerRef.current) {
-          startTime = Date.now();
-          timerRef.current = setInterval(() => {
-            setElapsedTime(Date.now() - startTime);
-          }, 100);
-        }
-      }
+    const t0 = performance.now();
+    
+    const stop = gatherCandidates({
+      iceServers,
+      onCandidate: c => setCandidates(p => [...p, c]),
+      onDone: () => setElapsed(Math.round(performance.now() - t0)),
+      onStateChange: setState
     });
+    
+    return stop; // Cleanup closes the connection
+  }, [iceServers]); // Depends on the server list object
 
-    return () => {
-      stopGathering();
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, [configKey]);
+  // Slide 14: Sort a COPY of the array during render, highest priority first
+  const sorted = [...candidates].sort(
+    (a, b) => b.priority - a.priority
+  );
 
   return (
     <div className="candidate-panel">
       <div className="panel-controls">
-        <button onClick={() => setConfigKey('none')}>No STUN</button>
-        <button onClick={() => setConfigKey('stun')}>Google STUN</button>
-        <button onClick={() => setConfigKey('wrong')}>Invalid STUN</button>
+        <button onClick={() => setConfigName('none')}>No STUN</button>
+        <button onClick={() => setConfigName('stun')}>Google STUN</button>
+        <button onClick={() => setConfigName('wrong')}>Invalid STUN</button>
       </div>
 
       <div className="panel-stats">
-        <span>State: <strong>{gatheringState}</strong></span>
-        <span>Time: <strong>{elapsedTime} ms</strong></span>
+        <span>State: <strong>{state}</strong></span>
+        {/* elapsed will be null until gathering finishes, then show ms */}
+        <span>Time: <strong>{elapsed !== null ? `${elapsed} ms` : '...'}</strong></span>
       </div>
 
       <table className="candidate-table">
@@ -79,8 +65,9 @@ function CandidatePanel() {
           </tr>
         </thead>
         <tbody>
-          {candidates.map((c) => (
-            <tr key={c.foundation + c.address} className={`row-${c.type}`}>
+          {/* Slide 14: Render sorted rows with stable candidate string key */}
+          {sorted.map(c => (
+            <tr key={c.candidate} className={`row-${c.type}`}>
               <td>{c.type}</td>
               <td>{c.protocol}</td>
               <td>{c.address}:{c.port}</td>
@@ -93,4 +80,5 @@ function CandidatePanel() {
     </div>
   );
 }
+
 export default CandidatePanel;

@@ -220,3 +220,255 @@
 .row-host { background: rgba(52, 152, 219, 0.2); }
 .row-srflx { background: rgba(39, 174, 96, 0.2); }
 .row-relay { background: rgba(243, 156, 18, 0.2); }
+
+.grid-controls {
+  align-items: center;
+}
+
+.participant-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  background: #222;
+}
+
+.participant-actions button {
+  font-size: 12px;
+  padding: 4px 8px;
+}
+
+.danger-btn {
+  background: #c0392b !important;
+  border-color: #c0392b !important;
+  color: white !important;
+}
+
+.danger-btn:hover {
+  background: #e74c3c !important;
+}
+
+.tile.raised-hand {
+  border-color: #f1c40f; /* Yellow border for raised hand */
+  box-shadow: 0 0 8px #f1c40f;
+}
+
+.hand-icon {
+  margin-left: 8px;
+  font-size: 1.2em;
+}
+
+.tile-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.tile-header h3 {
+  margin: 0;
+  flex-grow: 1; /* Pushes the mute icon to the right */
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #3498db; /* Blue circle */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* When muted, make the avatar grey to match the tile */
+.tile.muted .avatar {
+  background-color: #555;
+}
+
+.mute-icon {
+  float: none; /* Override old float */
+  font-size: 1rem;
+}
+
+.hand-icon {
+  margin-left: 8px;
+  font-size: 1.2em;
+}
+
+.network-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 6px;
+}
+
+.network-controls label {
+  font-weight: bold;
+  color: #aaa;
+}
+
+.net-up-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.net-down-btn {
+  background: #c0392b;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.failed-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.home-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.home-btn:hover {
+  background: #555;
+}
+
+.leave-btn {
+  background: #d35400 !important;
+  border-color: #d35400 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.leave-btn:hover {
+  background: #e67e22 !important;
+}
+
+.tile-controls {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  margin-top: 12px;
+}
+
+.tile-btn {
+  flex: 1;
+  background: #333;
+  border: 1px solid #555;
+  color: white;
+  padding: 6px 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.tile-btn:hover {
+  background: #444;
+}
+
+.tile-btn.active {
+  background: #f1c40f;
+  color: black;
+  border-color: #f1c40f;
+}
+
+.tile-btn.danger:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Make sure the note input doesn't crowd the buttons */
+.note-input {
+  margin-bottom: 5px;
+}
+
+.tile-video {
+  width: 100%;
+  height: 140px;
+  background: #000;
+  border-radius: 4px;
+  object-fit: cover; /* This makes the video fill the area nicely */
+  margin-bottom: 12px;
+  border: 1px solid #444;
+}
+
+.camera-error {
+  color: #ff4d4d;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #ff4d4d;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.cam-btn {
+  background: #2c3e50 !important;
+  border-color: #2c3e50 !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.cam-btn:hover {
+  background: #34495e !important;
+}
+
+/* Adjust tile height to accommodate video nicely */
+.tile {
+  display: flex;
+  flex-direction: column;
+}
+.device-select {
+  background: #2a2a2a;
+  color: #ffffff;
+  border: 1px solid #444;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.camera-status {
+  margin: 10px 0;
+  padding: 8px 15px;
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.camera-status strong {
+  color: #3498db;
+}
